@@ -19,25 +19,64 @@ connection.connect(function (err) {
 function questions() {
     inquirer
         .prompt({
-            name: "song",
+            name: "viewDepartment",
             type: "input",
-            message: "What song would you like to look for?"
+            message: "View a Department"
         })
-        .then(function (answer) {
-            console.log(answer.song);
-            connection.query("SELECT * FROM top5000 WHERE ?", { song: answer.song }, function (err, res) {
-                if (err) throw err;
-                console.log(
-                    "Position: " +
-                    res[0].position +
-                    " || Song: " +
-                    res[0].song +
-                    " || Artist: " +
-                    res[0].artist +
-                    " || Year: " +
-                    res[0].year
-                );
-                runSearch();
-            });
-        });
+
+        .prompt({
+            name: "viewRoles",
+            type: "input",
+            message: "View Roles"
+        })
+
+        .prompt({
+            name: "viewEmployees",
+            type: "input",
+            message: "View Employees"
+        })
+
+        .prompt({
+            name: "addDepartment",
+            type: "input",
+            message: "Add a Department"
+        })
+
+        .prompt({
+            name: "addRole",
+            type: "input",
+            message: "Add a Role"
+        })
+
+        .prompt({
+            name: "addEmployee",
+            type: "input",
+            message: "Add an Employee"
+        })
+
+        .prompt({
+            name: "updateEmployeeRoles",
+            type: "input",
+            message: "Update Employee Roles"
+        })
+
+
+
+    // .then(function (answer) {
+    //     console.log(answer.song);
+    //     connection.query("SELECT * FROM top5000 WHERE ?", { song: answer.song }, function (err, res) {
+    //         if (err) throw err;
+    //         console.log(
+    //             "Position: " +
+    //             res[0].position +
+    //             " || Song: " +
+    //             res[0].song +
+    //             " || Artist: " +
+    //             res[0].artist +
+    //             " || Year: " +
+    //             res[0].year
+    //         );
+    //         runSearch();
+    //     });
+    // });
 }
