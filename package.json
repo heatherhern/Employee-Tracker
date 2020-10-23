@@ -11,5 +11,14 @@
     "dependencies": {
         "inquirer": "^6.2.1",
         "mysql": "^2.16.0"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/heatherhern/Employee-Tracker.git"
+    },
+    "keywords": [],
+    "bugs": {
+        "url": "https://github.com/heatherhern/Employee-Tracker/issues"
+    },
+    "homepage": "https://github.com/heatherhern/Employee-Tracker#readme"
 }
