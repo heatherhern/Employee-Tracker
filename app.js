@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "",
+    password: "Herbie101!",
     database: "employee_trackerDB"
 });
 
@@ -19,64 +19,45 @@ connection.connect(function (err) {
 function questions() {
     inquirer
         .prompt({
-            name: "viewDepartment",
-            type: "input",
-            message: "View a Department"
+            name: "action",
+            type: "rawlist",
+            message: "What would you like to do?",
+            choices: [
+                "View Departments",
+                "View Employees",
+                "View Roles",
+                "Add a Department",
+                "Add an Employee",
+                "Add a Role",
+                "Update Employee Roles"
+            ]
         })
+        .then(function (answer) {
+            switch (answer.action) {
+                case "View Departments":
+                    // artistSearch();
+                    break;
 
-        .prompt({
-            name: "viewRoles",
-            type: "input",
-            message: "View Roles"
-        })
+                case "View Employees":
+                    // multiSearch();
+                    break;
 
-        .prompt({
-            name: "viewEmployees",
-            type: "input",
-            message: "View Employees"
-        })
+                case "View Roles":
+                    // rangeSearch();
+                    break;
 
-        .prompt({
-            name: "addDepartment",
-            type: "input",
-            message: "Add a Department"
-        })
+                case "Add a Department":
+                    // songSearch();
+                    break;
 
-        .prompt({
-            name: "addRole",
-            type: "input",
-            message: "Add a Role"
-        })
+                case "Add an Employee":
+                    // songAndAlbumSearch();
+                    break;
 
-        .prompt({
-            name: "addEmployee",
-            type: "input",
-            message: "Add an Employee"
-        })
-
-        .prompt({
-            name: "updateEmployeeRoles",
-            type: "input",
-            message: "Update Employee Roles"
-        })
-
-
-
-    // .then(function (answer) {
-    //     console.log(answer.song);
-    //     connection.query("SELECT * FROM top5000 WHERE ?", { song: answer.song }, function (err, res) {
-    //         if (err) throw err;
-    //         console.log(
-    //             "Position: " +
-    //             res[0].position +
-    //             " || Song: " +
-    //             res[0].song +
-    //             " || Artist: " +
-    //             res[0].artist +
-    //             " || Year: " +
-    //             res[0].year
-    //         );
-    //         runSearch();
-    //     });
-    // });
+                case "Update Employee Roles":
+                     // songAndAlbumSearch();
+                    break;
+                    
+            }
+        });
 }
