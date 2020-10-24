@@ -35,8 +35,10 @@ function questions() {
         .then(function (answer) {
             switch (answer.action) {
                 case "View Departments":
-                    // artistSearch();
-                    break;
+                    if (answer.action === "View Departments") {
+                        viewDepartments();
+                        break;
+                    }
 
                 case "View Employees":
                     // multiSearch();
@@ -60,4 +62,18 @@ function questions() {
                     
             }
         });
+}
+
+
+function viewDepartments() {
+     // query the database for all departments
+ connection.query("SELECT * FROM departments", function(err, res) {
+    if (err) throw err;
+    let resultsArray = [];
+    for (var i = 0; i < res.length; i++) {
+        resultsArray.push(res[i].name);
+    }
+    console.log(resultsArray);
+    // return resultsArray;
+})
 }
