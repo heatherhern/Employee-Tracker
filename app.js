@@ -71,8 +71,9 @@ function viewDepartments() {
     if (err) throw err;
     let resultsArray = [];
     for (var i = 0; i < res.length; i++) {
-        resultsArray.push(res[i].name);
+        resultsArray.push(res[i].dept_name);
     }
+    console.log("Here are the departments...")
     console.log(resultsArray);
     // return resultsArray;
 })
