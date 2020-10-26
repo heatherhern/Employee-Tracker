@@ -41,11 +41,11 @@ function questions() {
                     }
 
                 case "View Employees":
-                    // multiSearch();
+                    viewEmployees();
                     break;
 
                 case "View Roles":
-                    // rangeSearch();
+                    viewRoles();
                     break;
 
                 case "Add a Department":
@@ -57,24 +57,53 @@ function questions() {
                     break;
 
                 case "Update Employee Roles":
-                     // songAndAlbumSearch();
+                    // songAndAlbumSearch();
                     break;
-                    
+
             }
         });
 }
 
 
 function viewDepartments() {
-     // query the database for all departments
- connection.query("SELECT * FROM departments", function(err, res) {
-    if (err) throw err;
-    let resultsArray = [];
-    for (var i = 0; i < res.length; i++) {
-        resultsArray.push(res[i].dept_name);
-    }
-    console.log("Here are the departments...")
-    console.log(resultsArray);
-    // return resultsArray;
-})
+    // query the database for all departments
+    connection.query("SELECT * FROM departments", function (err, res) {
+        if (err) throw err;
+        let resultsArray = [];
+        for (var i = 0; i < res.length; i++) {
+            resultsArray.push(res[i].dept_name);
+        }
+        console.log("Here are the departments...")
+        console.log(resultsArray);
+        // return resultsArray;
+    })
+}
+
+function viewEmployees() {
+    // query the database for all employees
+    connection.query("SELECT * FROM employees", function (err, res) {
+        if (err) throw err;
+        let resultsArray = [];
+        for (var i = 0; i < res.length; i++) {
+            resultsArray.push(res[i].first_name);
+            // how to get the last name too?
+        }
+        console.log("Here are the employees...")
+        console.log(resultsArray);
+        // return resultsArray;
+    })
+}
+
+function viewRoles() {
+    // query the database for all Roles
+    connection.query("SELECT * FROM roles", function (err, res) {
+        if (err) throw err;
+        let resultsArray = [];
+        for (var i = 0; i < res.length; i++) {
+            resultsArray.push(res[i].title);
+        }
+        console.log("Here are the roles...")
+        console.log(resultsArray);
+        // return resultsArray;
+    })
 }
