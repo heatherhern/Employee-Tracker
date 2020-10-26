@@ -49,7 +49,7 @@ function questions() {
                     break;
 
                 case "Add a Department":
-                    // songSearch();
+                    addDepartment();
                     break;
 
                 case "Add an Employee":
@@ -107,3 +107,25 @@ function viewRoles() {
         // return resultsArray;
     })
 }
+
+
+function addDepartment() {
+    // prompt for info about the Department
+    inquirer
+        .prompt([
+            {
+                name: "deptName",
+                type: "input",
+                message: "What Department would you like to add?"
+            },
+        ])
+        .then(function (answer) {
+            // when finished prompting, insert Department
+            connection.query(
+                "INSERT INTO departments SET ?",
+                {
+                    dept_name: answer.deptName,
+                },
+            )
+            });
+        };
