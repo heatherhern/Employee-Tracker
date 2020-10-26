@@ -106,6 +106,7 @@ function viewRoles() {
         console.log(resultsArray);
         // return resultsArray;
     })
+    // need to re-run questions function at the end of other functions
 }
 
 
@@ -127,5 +128,9 @@ function addDepartment() {
                     dept_name: answer.deptName,
                 },
             )
+            console.log("Your new department has been added!")
             });
         };
+
+
+        // need to re call questions at the end of all functions 
