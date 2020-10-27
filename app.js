@@ -28,7 +28,6 @@ function questions() {
                 "View Roles",
                 "Add a Department",
                 "Add an Employee",
-                "Add a Role",
                 "Update Employee Roles"
             ]
         })
@@ -53,11 +52,11 @@ function questions() {
                     break;
 
                 case "Add an Employee":
-                    // songAndAlbumSearch();
+                    addEmployee()
                     break;
 
                 case "Update Employee Roles":
-                    // songAndAlbumSearch();
+                    addRoles();
                     break;
 
             }
@@ -131,6 +130,63 @@ function addDepartment() {
             console.log("Your new department has been added!")
             });
         };
+
+
+        function addRoles() {
+            // prompt for info about the Role
+            inquirer
+                .prompt([
+                    {
+                        name: "roleTitle",
+                        type: "input",
+                        message: "What Role would you like to add?"
+                    },
+                    {
+                        name: "salary",
+                        type: "input",
+                        message: "What salary does this position have?"
+                    },
+                ])
+                .then(function (answer) {
+                    // when finished prompting, insert Role
+                    connection.query(
+                        "INSERT INTO roles SET ?",
+                        {
+                            title: answer.roleTitle,
+                            salary: answer.salary
+                        },
+                    )
+                    console.log("Your new role has been added!")
+                    });
+                };
+
+                function addEmployee() {
+                    // prompt for info about the Role
+                    // inquirer
+                    //     .prompt([
+                    //         {
+                    //             name: "roleTitle",
+                    //             type: "input",
+                    //             message: "What Role would you like to add?"
+                    //         },
+                    //         {
+                    //             name: "salary",
+                    //             type: "input",
+                    //             message: "What salary does this position have?"
+                    //         },
+                    //     ])
+                    //     .then(function (answer) {
+                    //         // when finished prompting, insert Role
+                    //         connection.query(
+                    //             "INSERT INTO roles SET ?",
+                    //             {
+                    //                 title: answer.roleTitle,
+                    //                 salary: answer.salary
+                    //             },
+                    //         )
+                    //         console.log("Your new role has been added!")
+                    //         });
+                    //     };
 
 
         // need to re call questions at the end of all functions 
