@@ -1,6 +1,6 @@
 # Employee-Tracker
 
-[View Demo]("https://www.loom.com/share/95e9659e6ba746c285bd0f0394220258")
+[View Demo](https://www.loom.com/share/95e9659e6ba746c285bd0f0394220258)
 
 ### Description
 
