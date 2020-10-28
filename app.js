@@ -192,31 +192,94 @@ function addEmployee() {
         });
 };
 
-function updateRoles() {
-    inquirer
-        .prompt([
-            {
-                name: "employeeName",
-                type: "input",
-                message: "What is the first name of the employee you want to update?"
-            },
-            {
-                name: "employeeRole",
-                type: "input",
-                message: "What is their new role?"
-            },
-        ])
-        .then(function (answer) {
-            connection.query(
-                "SELECT first_name FROM employees AS a INNER JOIN roles AS b ON a.role_id = b.id and UPDATE employees SET role_id WHERE first_name = answer.employeeName",
-                // "SELECT ? FROM employees WHERE first_name = answer.employeeName",
-                {
-                    first_name: answer.employeeName,
-                    role_id: answer.employeeRole
-                },
-            )
-                console.log("Your employee has been updated!")
+// function updateRoles() {
+//     inquirer
+//         .prompt([
+//             {
+//                 name: "employeeName",
+//                 type: "input",
+//                 message: "What is the first name of the employee you want to update?"
+//             },
+//             {
+//                 name: "employeeRole",
+//                 type: "input",
+//                 message: "What is their new role?"
+//             },
+//         ])
+//         .then(function (answer) {
+//             connection.query(
+
+//                 "SELECT * FROM employees JOIN roles on employees.role_id = roles.id"
+//                 "UPDATE employees WHERE first_name = answer.employeeName "
+//                 // "SELECT first_name FROM employees AS a INNER JOIN roles AS b ON a.role_id = b.id and UPDATE employees SET role_id WHERE first_name = answer.employeeName",
+//                 // "SELECT ? FROM employees WHERE first_name = answer.employeeName",
+//             //     {
+//             //         first_name: answer.employeeName,
+//             //         role_id: answer.employeeRole
+//             //     },
+//             // )
+//                 // console.log("Your employee has been updated!")
+//         }
+//         );
+//         };
+//         // need to re call questions at the end of all functions
+
+function updateEmployeeRole(id, role_id) {
+    return this.connection.query(
+        "UPDATE employees SET role_id = ? WHERE id = ?",
+        [role_id, id]
+    )
+}
+
+function findAllRoles() {
+    return this.connection.query(
+        "SELECT role.id, role.title, departments.dept_name AS department, roles.salary FROM roles LEFT JOIN departments on roles.departments_id = departments.id;"
+    );
+};
+
+function findAllEmployees() {
+    return this.connection.query(
+        "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.dept_name AS departments, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = department.id LEFT JOIN employees manager on manager.id = employees.manager_id;"
+    );
+};
+
+async function updateRoles() {
+    const employees = await findAllEmployees();
+
+    const employeeChoices = employees.map(({ id, first_name, last_name }) => ({
+        name: `${first_name} ${last_name}`,
+        value: id
+    }));
+
+    const { employeeId } = await prompt([
+        {
+            type: "list",
+            name: "employeeId",
+            message: "Which employee's role do you want to update?",
+            choices: employeeChoices
         }
-        );
-        };
-        // need to re call questions at the end of all functions
+    ]);
+
+    const roles = await findAllRoles();
+
+    const roleChoices = roles.map(({ id, title }) => ({
+        name: title,
+        value: id
+    }));
+
+    const { roleId } = await prompt([
+        {
+            type: "list",
+            name: "roleId",
+            message: "Which role do you want to assign the selected employee?",
+            choices: roleChoices
+        }
+    ]);
+
+
+    await updateEmployeeRole(employeeId, roleId);
+
+    console.log("Updated employee's role");
+
+    // questionPrompts();
+};
