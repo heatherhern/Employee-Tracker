@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+const cTable = require('console.table');
 
 // mySQL Connection //
 
@@ -77,8 +78,9 @@ function viewDepartments() {
             resultsArray.push(res[i].dept_name);
         }
         console.log("Here are the departments...")
-        console.log(resultsArray);
+        console.table(resultsArray);
         // return resultsArray;
+        questions();
     })
 }
 
@@ -92,8 +94,9 @@ function viewEmployees() {
             // how to get the last name too?
         }
         console.log("Here are the employees...")
-        console.log(resultsArray);
+        console.table(resultsArray);
         // return resultsArray;
+        questions();
     })
 }
 
@@ -106,8 +109,9 @@ function viewRoles() {
             resultsArray.push(res[i].title);
         }
         console.log("Here are the roles...")
-        console.log(resultsArray);
+        console.table(resultsArray);
         // return resultsArray;
+        questions();
     })
     // need to re-run questions function at the end of other functions
 }
@@ -131,7 +135,8 @@ function addDepartment() {
                     dept_name: answer.deptName,
                 },
             )
-            console.log("Your new department has been added!")
+            console.table("Your new department has been added!");
+            questions();
         });
 };
 
@@ -160,7 +165,8 @@ function addRoles() {
                     salary: answer.salary
                 },
             )
-            console.log("Your new role has been added!")
+            console.table("Your new role has been added!")
+            questions();
         });
 };
 
@@ -188,7 +194,8 @@ function addEmployee() {
                     last_name: answer.lastName,
                 },
             )
-            console.log("Your new employee has been added!")
+            console.table("Your new employee has been added!")
+            questions();
         });
 };
 
@@ -239,7 +246,7 @@ function findAllRoles() {
 
 function findAllEmployees() {
     return this.connection.query(
-        "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.dept_name AS departments, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = department.id LEFT JOIN employees manager on manager.id = employees.manager_id;"
+        "SELECT employees.id, employees.first_name, employees.last_name, roles.title, departments.dept_name AS departments, roles.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employees LEFT JOIN roles on employees.role_id = roles.id LEFT JOIN departments on roles.department_id = departments.id LEFT JOIN employees manager on manager.id = employees.manager_id;"
     );
 };
 
