@@ -28,6 +28,7 @@ function questions() {
                 "View Roles",
                 "Add a Department",
                 "Add an Employee",
+                "Add an Employee Role",
                 "Update Employee Roles"
             ]
         })
@@ -55,10 +56,13 @@ function questions() {
                     addEmployee()
                     break;
 
-                case "Update Employee Roles":
+                case "Add an Employee Role":
                     addRoles();
                     break;
 
+                case "Update Employee Roles":
+                    updateRoles();
+                    break;
             }
         });
 }
@@ -128,65 +132,91 @@ function addDepartment() {
                 },
             )
             console.log("Your new department has been added!")
-            });
+        });
+};
+
+
+function addRoles() {
+    // prompt for info about the Role
+    inquirer
+        .prompt([
+            {
+                name: "roleTitle",
+                type: "input",
+                message: "What Role would you like to add?"
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "What salary does this position have?"
+            },
+        ])
+        .then(function (answer) {
+            // when finished prompting, insert Role
+            connection.query(
+                "INSERT INTO roles SET ?",
+                {
+                    title: answer.roleTitle,
+                    salary: answer.salary
+                },
+            )
+            console.log("Your new role has been added!")
+        });
+};
+
+function addEmployee() {
+    // prompt for info about the Employee
+    inquirer
+        .prompt([
+            {
+                name: "firstName",
+                type: "input",
+                message: "What is the first name of the employee you want to add?"
+            },
+            {
+                name: "lastName",
+                type: "input",
+                message: "What is the last name of the employee you want to add?"
+            },
+        ])
+        .then(function (answer) {
+            // when finished prompting, insert Role
+            connection.query(
+                "INSERT INTO employees SET ?",
+                {
+                    first_name: answer.firstName,
+                    last_name: answer.lastName,
+                },
+            )
+            console.log("Your new employee has been added!")
+        });
+};
+
+function updateRoles() {
+    inquirer
+        .prompt([
+            {
+                name: "employeeName",
+                type: "input",
+                message: "What is the first name of the employee you want to update?"
+            },
+            {
+                name: "employeeRole",
+                type: "input",
+                message: "What is their new role?"
+            },
+        ])
+        .then(function (answer) {
+            connection.query(
+                "SELECT first_name FROM employees AS a INNER JOIN roles AS b ON a.role_id = b.id and UPDATE employees SET role_id WHERE first_name = answer.employeeName",
+                // "SELECT ? FROM employees WHERE first_name = answer.employeeName",
+                {
+                    first_name: answer.employeeName,
+                    role_id: answer.employeeRole
+                },
+            )
+                console.log("Your employee has been updated!")
+        }
+        );
         };
-
-
-        function addRoles() {
-            // prompt for info about the Role
-            inquirer
-                .prompt([
-                    {
-                        name: "roleTitle",
-                        type: "input",
-                        message: "What Role would you like to add?"
-                    },
-                    {
-                        name: "salary",
-                        type: "input",
-                        message: "What salary does this position have?"
-                    },
-                ])
-                .then(function (answer) {
-                    // when finished prompting, insert Role
-                    connection.query(
-                        "INSERT INTO roles SET ?",
-                        {
-                            title: answer.roleTitle,
-                            salary: answer.salary
-                        },
-                    )
-                    console.log("Your new role has been added!")
-                    });
-                };
-
-                function addEmployee() {
-                    // prompt for info about the Employee
-                    inquirer
-                        .prompt([
-                            {
-                                name: "firstName",
-                                type: "input",
-                                message: "What is the first name of the employee you want to add?"
-                            },
-                            {
-                                name: "lastName",
-                                type: "input",
-                                message: "What is the last name of the employee you want to add?"
-                            },
-                        ])
-                        .then(function (answer) {
-                            // when finished prompting, insert Role
-                            connection.query(
-                                "INSERT INTO employees SET ?",
-                                {
-                                    first_name: answer.firstName,
-                                    last_name: answer.lastName,
-                                },
-                            )
-                            console.log("Your new employee has been added!")
-                            });
-                        };
-
-
-        // need to re call questions at the end of all functions 
+        // need to re call questions at the end of all functions
